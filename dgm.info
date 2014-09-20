@@ -1,0 +1,6 @@
+name = DrupalGapManager
+description = The companion Drupal module for DrupalGapManager
+core = 7.x
+package = Mobile
+dependencies[] = drupalgap
+
