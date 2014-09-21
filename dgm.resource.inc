@@ -21,6 +21,25 @@ function dgm_project_download($project_name) {
     $result->field_project_type = $project->field_project_type['und'][0]['value'];
     $result->field_project_machine_name = $project->field_project_machine_name['und'][0]['value'];
     $result->field_project_github_url = $project->field_project_github_url['und'][0]['url'];
+    $parts = explode('/', $result->field_project_github_url);
+    if (sizeof($parts) >= 5) {
+      $owner = $parts[sizeof($parts) - 2];
+      $repo = $parts[sizeof($parts) - 1];
+      // Get cURL resource
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+      curl_setopt_array($curl, array(
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => 'https://api.github.com/repos/' .
+            check_plain($owner) . '/' .
+            check_plain($repo),
+          CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+      ));
+      // Send the request & save response to $resp
+      $result->github = drupal_json_decode(curl_exec($curl));
+      // Close request to clear up some resources
+      curl_close($curl);
+    }
     return $result;
   }
   return NULL;
