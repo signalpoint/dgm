@@ -22,7 +22,7 @@ function dgm_services_resources() {
           'file' => $file,
           'access callback' => $access_callback,
           'access callback file' => $access_callback_file,
-          'access arguments' => array('view published content'),
+          'access arguments' => array('access content'),
           'access arguments append' => TRUE,
           'callback' => 'dgm_project_download',
           'args' => array(
